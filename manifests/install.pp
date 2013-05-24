@@ -10,7 +10,7 @@ class foreman_proxy::install {
     default => Foreman::Install::Repos['foreman_proxy'],
   }
 
-  package {'foreman-proxy':
+  package {'ruby193-foreman-proxy':
     ensure  => present,
     require => $repo,
   }
