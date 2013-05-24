@@ -1,5 +1,7 @@
 class foreman_proxy::config {
 
+  $scl_root = "/opt/rh/ruby193/root"
+
   # Ensure SSL certs from the puppetmaster are available
   # Relationship is duplicated there as defined() is parse-order dependent
   if $foreman_proxy::ssl and defined(Class['puppet::server::config']) {
@@ -30,7 +32,7 @@ class foreman_proxy::config {
     notify  => Class['foreman_proxy::service'],
   }
 
-  file{'/etc/foreman-proxy/settings.yml':
+  file{"${scl_root}/etc/foreman-proxy/settings.yml":
     content => template('foreman_proxy/settings.yml.erb'),
     owner   => $foreman_proxy::user,
     group   => $foreman_proxy::user,
