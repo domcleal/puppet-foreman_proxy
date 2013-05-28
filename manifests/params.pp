@@ -11,9 +11,10 @@ class foreman_proxy::params {
 
   # variables
   $port = "8443"
-  $dir  = '/usr/share/foreman-proxy'
+  $sclroot = '/opt/rh/ruby193/root'
+  $dir  = "${sclroot}/usr/share/foreman-proxy"
   $user = 'foreman-proxy'
-  $log  = '/var/log/foreman-proxy/proxy.log'
+  $log  = "${sclroot}/var/log/foreman-proxy/proxy.log"
 
   $puppet_home = $puppet::params::puppet_vardir
 
@@ -48,7 +49,7 @@ class foreman_proxy::params {
 
   # puppetca settings
   $puppetca          = true
-  $autosign_location = '/etc/puppet/autosign.conf'
+  $autosign_location = "${sclroot}/etc/puppet/autosign.conf"
   $puppetca_cmd      = $puppet::params::puppetca_cmd
   $puppet_group      = 'puppet'
   $ssldir            = "${puppet_home}/ssl"
