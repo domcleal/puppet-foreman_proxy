@@ -282,6 +282,30 @@ describe 'foreman_proxy::config' do
     end
   end
 
+  context 'with TFTP enabled and tftp_syslinux_filenames set' do
+    let :facts do
+      {
+        :fqdn                   => 'host.example.org',
+        :ipaddress              => '127.0.1.2',
+        :operatingsystem        => 'RedHat',
+        :operatingsystemrelease => '6.5',
+        :osfamily               => 'RedHat',
+      }
+    end
+
+    let :pre_condition do
+      'class {"foreman_proxy":
+        tftp => true,
+        tftp_syslinux_filenames => [ "/my/file", "/my/anotherfile" ],
+      }'
+    end
+
+    it 'should copy the given files' do
+      should contain_foreman_proxy__tftp__copy_file('/my/file')
+      should contain_foreman_proxy__tftp__copy_file('/my/anotherfile')
+    end
+  end
+
   context 'with pupppetrun_provider set to mcollective' do
     let :facts do
       {

@@ -133,9 +133,11 @@
 #
 # $tftp_listen_on::             TFTP proxy to listen on https, http, or both
 #
-# $tftp_syslinux_root::         Directory that hold syslinux files
+# $tftp_syslinux_filenames::    Syslinux files to install on TFTP (pull paths)
+#                               type:array
 #
-# $tftp_syslinux_files::        Syslinux files to install on TFTP (copied from $tftp_syslinux_root)
+# $tftp_syslinux_files::        Syslinux files to install on TFTP (copied from $tftp_syslinux_root,
+#                               deprecated, see $tftp_syslinux_filenames)
 #                               type:array
 #
 # $tftp_root::                  TFTP root directory
@@ -293,6 +295,7 @@ class foreman_proxy (
   $tftp_listen_on             = $foreman_proxy::params::tftp_listen_on,
   $tftp_syslinux_root         = $foreman_proxy::params::tftp_syslinux_root,
   $tftp_syslinux_files        = $foreman_proxy::params::tftp_syslinux_files,
+  $tftp_syslinux_filenames    = $foreman_proxy::params::tftp_syslinux_filenames,
   $tftp_root                  = $foreman_proxy::params::tftp_root,
   $tftp_dirs                  = $foreman_proxy::params::tftp_dirs,
   $tftp_servername            = $foreman_proxy::params::tftp_servername,
