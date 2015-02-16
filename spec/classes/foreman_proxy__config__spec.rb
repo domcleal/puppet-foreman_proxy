@@ -306,6 +306,28 @@ describe 'foreman_proxy::config' do
     end
   end
 
+  context 'with TFTP enabled on Debian 8 (Jessie)' do
+    let :facts do
+      {
+        :fqdn                   => 'host.example.org',
+        :ipaddress              => '127.0.1.2',
+        :operatingsystem        => 'Debian',
+        :operatingsystemrelease => '8.0',
+        :osfamily               => 'Debian',
+      }
+    end
+
+    let :pre_condition do
+      'class {"foreman_proxy":
+        tftp => true,
+      }'
+    end
+
+    it 'should copy the default files' do
+      should contain_foreman_proxy__tftp__copy_file('/usr/lib/PXELINUX/pxelinux.0')
+    end
+  end
+
   context 'with pupppetrun_provider set to mcollective' do
     let :facts do
       {
