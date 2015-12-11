@@ -870,6 +870,22 @@ describe 'foreman_proxy::config' do
           ])
         end
 
+        context 'with dhcp_subnets' do
+          let :pre_condition do
+            'class {"foreman_proxy":
+              dhcp         => true,
+              dhcp_subnets => ["192.168.205.0/255.255.255.128", "192.168.205.128/255.255.255.128"],
+              dhcp_managed => false,
+            }'
+          end
+
+          it 'should set :subnets' do
+            verify_contents(catalogue, "#{etc_dir}/foreman-proxy/settings.d/dhcp.yml", [
+              ':subnets: ["192.168.205.0/255.255.255.128", "192.168.205.128/255.255.255.128"]',
+            ])
+          end
+        end
+
         context 'with dhcp_vendor' do
           let :pre_condition do
             'class {"foreman_proxy":
@@ -922,6 +938,23 @@ describe 'foreman_proxy::config' do
             it 'should set :dhcp_vendor' do
               verify_contents(catalogue, "#{etc_dir}/foreman-proxy/settings.d/dhcp.yml", [
                 ':dhcp_vendor: native_ms',
+              ])
+            end
+          end
+
+          context 'with dhcp_subnets' do
+            let :pre_condition do
+              'class {"foreman_proxy":
+                dhcp                    => true,
+                dhcp_subnets            => ["192.168.205.0/255.255.255.128", "192.168.205.128/255.255.255.128"],
+                dhcp_managed            => false,
+                dhcp_split_config_files => false,
+              }'
+            end
+
+            it 'should set :dhcp_subnets' do
+              verify_contents(catalogue, "#{etc_dir}/foreman-proxy/settings.d/dhcp.yml", [
+                ':dhcp_subnets: ["192.168.205.0/255.255.255.128", "192.168.205.128/255.255.255.128"]',
               ])
             end
           end

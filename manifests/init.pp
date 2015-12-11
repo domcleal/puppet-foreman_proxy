@@ -337,6 +337,7 @@ class foreman_proxy (
   $dhcp_managed               = $foreman_proxy::params::dhcp_managed,
   $dhcp_provider              = $foreman_proxy::params::dhcp_provider,
   $dhcp_vendor                = $foreman_proxy::params::dhcp_vendor,
+  $dhcp_subnets               = $foreman_proxy::params::dhcp_subnets,
   $dhcp_option_domain         = $foreman_proxy::params::dhcp_option_domain,
   $dhcp_interface             = $foreman_proxy::params::dhcp_interface,
   $dhcp_gateway               = $foreman_proxy::params::dhcp_gateway,
@@ -424,6 +425,9 @@ class foreman_proxy (
   validate_array($dhcp_option_domain)
   validate_integer($dhcp_omapi_port)
   validate_string($dhcp_provider, $dhcp_server)
+  if $dhcp_subnets {
+    validate_array($dhcp_subnets)
+  }
   if $dhcp_vendor {
     validate_string($dhcp_vendor)
     warning("${::hostname}: foreman_proxy::dhcp_vendor is deprecated; please use dhcp_provider instead")
